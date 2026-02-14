@@ -119,10 +119,16 @@ export default function App() {
             <h2 className="text-3xl md:text-4xl font-black mb-12 uppercase tracking-tighter">O que elas conseguiram...</h2>
             <div className="relative group max-w-sm mx-auto">
               <WistiaVideo mediaId={TESTIMONIAL_VIDEOS[current]} aspect="9:16" />
-              <button onClick={prev} className="absolute -left-12 top-1/2 -translate-y-1/2 bg-white/10 p-4 rounded-full border border-white/20 text-white z-20 backdrop-blur-md hover:bg-white/20 transition-all">
+              <button 
+                onClick={(e) => { e.preventDefault(); prev(); }}
+                className="absolute -left-12 top-1/2 -translate-y-1/2 bg-white/10 p-4 rounded-full border border-white/20 text-white z-20 backdrop-blur-md hover:bg-white/20 transition-all"
+              >
                 <ChevronLeft size={24} />
               </button>
-              <button onClick={next} className="absolute -right-12 top-1/2 -translate-y-1/2 bg-white/10 p-4 rounded-full border border-white/20 text-white z-20 backdrop-blur-md hover:bg-white/20 transition-all">
+              <button 
+                onClick={(e) => { e.preventDefault(); next(); }}
+                className="absolute -right-12 top-1/2 -translate-y-1/2 bg-white/10 p-4 rounded-full border border-white/20 text-white z-20 backdrop-blur-md hover:bg-white/20 transition-all"
+              >
                 <ChevronRight size={24} />
               </button>
             </div>
