@@ -14,6 +14,11 @@ import {
   Infinity 
 } from 'lucide-react';
 
+// Use a constant for the custom element to avoid shadowing standard JSX elements
+// and prevent the "Property 'a' does not exist on type 'JSX.IntrinsicElements'" errors.
+// This is a more robust way to handle custom elements in some TypeScript environments.
+const WistiaPlayer = 'wistia-player' as any;
+
 // Constants
 const CHECKOUT_URL = "https://www.ggcheckout.com/checkout/v2/zDzCEIc3B2tIxRsxGTuh";
 const TESTIMONIAL_VIDEOS = ['d26a5l0mu7', '2e3i7kc4d2', 'nfduva0wh3', '3c9jex60yz'];
@@ -29,6 +34,16 @@ const CTAButton = ({ className = "", children }: { className?: string, children?
 );
 
 const WistiaVideo = ({ mediaId, aspect = "16:9", className = "" }: { mediaId: string, aspect?: string, className?: string }) => {
+  // Use the new Wistia 3.0 player for the main VSL
+  if (mediaId === "u7bkfcwrlm") {
+    return (
+      <div className={`relative w-full overflow-hidden rounded-2xl shadow-2xl border-2 border-zinc-800 bg-zinc-900 ${className}`}>
+        {/* Using WistiaPlayer constant to avoid JSX intrinsic element errors */}
+        <WistiaPlayer media-id="u7bkfcwrlm" aspect="1.7777777777777777"></WistiaPlayer>
+      </div>
+    );
+  }
+
   const paddingBottom = aspect === "9:16" ? "177.77%" : "56.25%";
   
   return (
@@ -60,7 +75,6 @@ const HeroSection = () => (
         Acesso por Tempo Limitado
       </div>
       
-      {/* Red line ajustada para mobile */}
       <h1 className="text-[1.75rem] leading-[1.1] sm:text-4xl md:text-6xl lg:text-7xl font-black tracking-tight">
         O Segredo <span className="text-red-500 red-glow italic">"Invisível"</span> para Fazer Ele Te Desejar Como Se Fosse a Primeira Vez... <br className="hidden md:block" />
         <span className="block mt-3 text-red-500 drop-shadow-[0_0_15px_rgba(239,68,68,0.5)]">
@@ -77,7 +91,7 @@ const HeroSection = () => (
       </CTAButton>
 
       <div className="mt-12">
-        <WistiaVideo mediaId="sqw28d5hlt" aspect="16:9" />
+        <WistiaVideo mediaId="u7bkfcwrlm" aspect="16:9" />
         <p className="mt-4 text-zinc-500 text-sm italic">Assista ao vídeo acima para entender como funciona</p>
       </div>
     </div>
@@ -127,7 +141,7 @@ const MechanismSection = () => (
             Diferente de tudo que você já viu, o PRE não se trata de joguinhos ou manipulação barata. 
           </p>
           <p className="text-xl text-zinc-300 leading-relaxed">
-            É um protocolo comportamental passo a passo que utiliza gatilhos de <span className="text-white font-bold">Inversão de Prioridade</span>. Nós vamos desarmar a resistência dele e forçar o cérebro dele a reabrir a conexão emocional que ele mesmo fechou.
+            É um protocolo comportamental passo a passo que utiliza gatilhos de <span className="text-white font-bold">Inversão de Prioridade</span>. Nós vamos desarmar a resistência dele e forçar o cérebro de dele a reabrir a conexão emocional que ele mesmo fechou.
           </p>
           <div className="flex flex-col gap-4">
             <div className="flex items-center gap-3 text-zinc-300">

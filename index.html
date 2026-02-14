@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="pt-BR">
   <head>
@@ -38,6 +37,18 @@
       defer
     ></script>
     <!-- End Utmify Pixel & Scripts -->
+
+    <!-- Wistia Scripts for New VSL -->
+    <script src="https://fast.wistia.com/player.js" async></script>
+    <script src="https://fast.wistia.com/embed/u7bkfcwrlm.js" async type="module"></script>
+    <style>
+      wistia-player[media-id='u7bkfcwrlm']:not(:defined) { 
+        background: center / contain no-repeat url('https://fast.wistia.com/embed/medias/u7bkfcwrlm/swatch'); 
+        display: block; 
+        filter: blur(5px); 
+        padding-top:56.25%; 
+      }
+    </style>
 
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -81,7 +92,6 @@
     <!-- End Meta Pixel Code (Noscript) -->
     
     <div id="root"></div>
-    <!-- Carrega o entrypoint do React -->
     <script type="module" src="./index.tsx"></script>
   </body>
 </html>
