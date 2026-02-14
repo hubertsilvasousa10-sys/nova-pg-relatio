@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { 
   ChevronLeft, 
   ChevronRight, 
@@ -13,14 +13,13 @@ import {
   Infinity 
 } from 'lucide-react';
 
-// Constante para o elemento customizado da Wistia
+// Custom Element definition for Wistia 3.0
 const WistiaPlayer = 'wistia-player' as any;
 
-// Constantes
+// Constants
 const CHECKOUT_URL = "https://www.ggcheckout.com/checkout/v2/zDzCEIc3B2tIxRsxGTuh";
 const TESTIMONIAL_VIDEOS = ['d26a5l0mu7', '2e3i7kc4d2', 'nfduva0wh3', '3c9jex60yz'];
 
-// Componentes
 const CTAButton = ({ className = "", children }: { className?: string, children?: React.ReactNode }) => (
   <a 
     href={CHECKOUT_URL}
@@ -31,6 +30,7 @@ const CTAButton = ({ className = "", children }: { className?: string, children?
 );
 
 const WistiaVideo = ({ mediaId, aspect = "16:9", className = "" }: { mediaId: string, aspect?: string, className?: string }) => {
+  // Use specialized handling for the new VSL ID
   if (mediaId === "u7bkfcwrlm") {
     return (
       <div className={`relative w-full overflow-hidden rounded-2xl shadow-2xl border-2 border-zinc-800 bg-zinc-900 ${className}`}>
@@ -39,6 +39,7 @@ const WistiaVideo = ({ mediaId, aspect = "16:9", className = "" }: { mediaId: st
     );
   }
 
+  // Fallback/Standard handling for testimonials (Wistia 2.0 Iframe)
   const paddingBottom = aspect === "9:16" ? "177.77%" : "56.25%";
   
   return (
@@ -62,7 +63,7 @@ const WistiaVideo = ({ mediaId, aspect = "16:9", className = "" }: { mediaId: st
 };
 
 const HeroSection = () => (
-  <section className="relative pt-20 pb-20 px-4 overflow-hidden">
+  <section className="relative pt-20 pb-12 px-4 overflow-hidden">
     <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-[500px] bg-red-900/10 blur-[120px] rounded-full -z-10"></div>
     <div className="max-w-5xl mx-auto text-center space-y-8">
       <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-red-900/20 border border-red-500/30 text-red-400 text-xs md:text-sm font-semibold mb-4 animate-pulse">
@@ -78,7 +79,7 @@ const HeroSection = () => (
       </h1>
       
       <p className="text-lg md:text-2xl text-zinc-400 max-w-3xl mx-auto font-medium leading-relaxed px-2">
-        Descubra o mecanismo oculto que reativa a conexão emocional e faz com que ele sinta medo de te perder, mesmo que hoje ele esteja frio e te ignorando.
+        Descubra o mecanismo oculto que reativa a conexão emocional e faz com que ele sinta medo de te perder.
       </p>
 
       <CTAButton className="mt-4 w-full md:w-auto">
@@ -97,70 +98,18 @@ const PainSection = () => (
   <section className="py-20 bg-zinc-950 px-4 border-y border-zinc-900">
     <div className="max-w-4xl mx-auto">
       <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">Isso parece familiar para você?</h2>
-      
       <div className="space-y-6">
         {[
           "Você envia mensagem e ele visualiza, mas não responde ou demora horas.",
           "As respostas dele são frias, curtas e sem nenhum sinal de carinho.",
           "Você sente que ele perdeu totalmente o interesse por quem você é.",
-          "A ansiedade te consome toda vez que você pega o celular esperando um sinal.",
-          "Quanto mais você tenta conversar ou cobrar, mais ele se afasta e foge."
+          "A ansiedade te consome toda vez que você espera um sinal no celular."
         ].map((pain, idx) => (
-          <div key={idx} className="flex items-start gap-4 p-6 bg-zinc-900/50 rounded-2xl border border-zinc-800 hover:border-red-900/30 transition-colors group">
-            <AlertCircle className="text-red-500 shrink-0 mt-1 group-hover:scale-110 transition-transform" />
-            <p className="text-lg md:text-xl text-zinc-300 leading-relaxed">{pain}</p>
+          <div key={idx} className="flex items-start gap-4 p-6 bg-zinc-900/50 rounded-2xl border border-zinc-800 transition-colors">
+            <AlertCircle className="text-red-500 shrink-0 mt-1" />
+            <p className="text-lg text-zinc-300 leading-relaxed">{pain}</p>
           </div>
         ))}
-      </div>
-    </div>
-  </section>
-);
-
-const MechanismSection = () => (
-  <section className="py-20 px-4 bg-black relative">
-    <div className="max-w-5xl mx-auto text-center">
-      <h2 className="text-zinc-500 text-lg uppercase tracking-widest font-bold mb-4">A Solução Científica</h2>
-      <h3 className="text-4xl md:text-5xl font-extrabold mb-8">
-        Conheça o <span className="text-green-500">Protocolo de Reversão Emocional (PRE)</span>
-      </h3>
-      
-      <div className="grid md:grid-cols-2 gap-12 items-center text-left mt-16">
-        <div className="space-y-6">
-          <p className="text-xl text-zinc-300 leading-relaxed">
-            Diferente de tudo que você já viu, o PRE não se trata de joguinhos ou manipulação barata. 
-          </p>
-          <p className="text-xl text-zinc-300 leading-relaxed">
-            É um protocolo comportamental passo a passo que utiliza gatilhos de <span className="text-white font-bold">Inversão de Prioridade</span>. Nós vamos desarmar a resistência dele e forçar o cérebro de dele a reabrir a conexão emocional que ele mesmo fechou.
-          </p>
-          <div className="flex flex-col gap-4">
-            <div className="flex items-center gap-3 text-zinc-300">
-              <CheckCircle2 className="text-green-500" />
-              <span>Sem necessidade de discussões intermináveis</span>
-            </div>
-            <div className="flex items-center gap-3 text-zinc-300">
-              <CheckCircle2 className="text-green-500" />
-              <span>Resultados visíveis nos primeiros 3 dias</span>
-            </div>
-          </div>
-        </div>
-        <div className="bg-zinc-900 p-8 rounded-3xl border border-zinc-800 shadow-2xl relative overflow-hidden">
-            <Zap className="text-yellow-500 mb-6" size={48} fill="currentColor" />
-            <h4 className="text-2xl font-bold mb-6 text-white text-center">Como Funciona o Método:</h4>
-            
-            <div className="relative w-full aspect-[9/16] max-w-[280px] mx-auto mb-10 rounded-3xl overflow-hidden border-4 border-zinc-800 shadow-2xl group">
-              <img 
-                src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=1000&auto=format&fit=crop" 
-                alt="Representação" 
-                className="w-full h-full object-cover grayscale brightness-90 group-hover:grayscale-0 transition-all duration-700"
-              />
-            </div>
-
-            <ul className="space-y-4 text-zinc-400">
-                <li className="flex gap-2"><strong>1. Desarme:</strong> Quebramos o ciclo de cobrança.</li>
-                <li className="flex gap-2"><strong>2. Escassez:</strong> Criamos um vazio que só você preenche.</li>
-                <li className="flex gap-2"><strong>3. Reativação:</strong> Gatilhos de mensagens específicas.</li>
-            </ul>
-        </div>
       </div>
     </div>
   </section>
@@ -174,36 +123,16 @@ const TestimonialSlider = () => {
 
   return (
     <section className="py-24 px-4 bg-black overflow-hidden border-y border-zinc-900">
-      <div className="max-w-4xl mx-auto">
-        <h2 className="text-3xl md:text-4xl font-black text-center mb-4 uppercase tracking-tighter">O que elas conseguiram...</h2>
-        <p className="text-zinc-500 text-center mb-12 font-medium">Resultados reais de quem aplicou o Protocolo</p>
-        
+      <div className="max-w-4xl mx-auto text-center">
+        <h2 className="text-3xl md:text-4xl font-black mb-12 uppercase tracking-tighter">O que elas conseguiram...</h2>
         <div className="relative group max-w-sm mx-auto">
           <WistiaVideo mediaId={TESTIMONIAL_VIDEOS[current]} aspect="9:16" />
-          
-          <button 
-            onClick={prev}
-            className="absolute -left-12 md:-left-20 top-1/2 -translate-y-1/2 bg-white/5 hover:bg-white/10 p-4 rounded-full border border-white/10 text-white z-20 backdrop-blur-md transition-all"
-          >
-            <ChevronLeft size={28} />
+          <button onClick={prev} className="absolute -left-12 top-1/2 -translate-y-1/2 bg-white/5 p-4 rounded-full border border-white/10 text-white z-20 backdrop-blur-md">
+            <ChevronLeft size={24} />
           </button>
-          
-          <button 
-            onClick={next}
-            className="absolute -right-12 md:-right-20 top-1/2 -translate-y-1/2 bg-white/5 hover:bg-white/10 p-4 rounded-full border border-white/10 text-white z-20 backdrop-blur-md transition-all"
-          >
-            <ChevronRight size={28} />
+          <button onClick={next} className="absolute -right-12 top-1/2 -translate-y-1/2 bg-white/5 p-4 rounded-full border border-white/10 text-white z-20 backdrop-blur-md">
+            <ChevronRight size={24} />
           </button>
-        </div>
-
-        <div className="flex justify-center gap-3 mt-10">
-          {TESTIMONIAL_VIDEOS.map((_, i) => (
-            <button 
-              key={i} 
-              onClick={() => setCurrent(i)}
-              className={`h-2 transition-all duration-500 rounded-full ${i === current ? 'bg-green-500 w-12' : 'bg-zinc-800 w-4'}`}
-            />
-          ))}
         </div>
       </div>
     </section>
@@ -224,11 +153,9 @@ const OfferSection = () => (
             </div>
             <p className="text-zinc-400 font-medium">Pagamento único • Acesso Vitalício</p>
           </div>
-          
           <CTAButton className="w-full text-2xl py-6">
             SIM! QUERO GARANTIR MINHA VAGA
           </CTAButton>
-          
           <div className="mt-8 flex flex-wrap justify-center gap-6 text-zinc-500 text-sm">
             <div className="flex items-center gap-2"><Lock size={16} /> Compra 100% Segura</div>
             <div className="flex items-center gap-2"><Zap size={16} /> Acesso Imediato</div>
@@ -240,26 +167,10 @@ const OfferSection = () => (
   </section>
 );
 
-const GuaranteeSection = () => (
-  <section className="py-16 px-4 bg-zinc-950">
-    <div className="max-w-3xl mx-auto p-8 md:p-12 bg-zinc-900 border-2 border-dashed border-zinc-700 rounded-3xl flex flex-col md:flex-row items-center gap-8 text-center md:text-left">
-      <div className="w-32 h-32 shrink-0 rounded-full bg-green-900/20 border-4 border-green-500/30 flex items-center justify-center mx-auto md:mx-0">
-          <ShieldCheck size={64} className="text-green-500" />
-      </div>
-      <div>
-        <h2 className="text-3xl font-bold mb-4">Risco Zero: 7 Dias de Garantia</h2>
-        <p className="text-lg text-zinc-400 leading-relaxed mb-4">
-          Você tem uma semana inteira para testar o método. Se você sentir que o conteúdo não é para você, eu devolvo 100% do seu dinheiro.
-        </p>
-      </div>
-    </div>
-  </section>
-);
-
 const Footer = () => (
   <footer className="py-12 px-4 bg-black border-t border-zinc-900 text-zinc-600 text-center text-sm">
-    <div className="max-w-4xl mx-auto space-y-6">
-      <div className="flex justify-center gap-8 mb-4">
+    <div className="max-w-4xl mx-auto space-y-4">
+      <div className="flex justify-center gap-8">
         <a href="#" className="hover:text-zinc-400 transition-colors">Termos de Uso</a>
         <a href="#" className="hover:text-zinc-400 transition-colors">Políticas de Privacidade</a>
       </div>
@@ -270,27 +181,23 @@ const Footer = () => (
 
 export default function App() {
   return (
-    <div className="min-h-screen selection:bg-green-500 selection:text-white bg-[#0a0a0a]">
+    <div className="min-h-screen bg-[#0a0a0a] text-white selection:bg-green-500 selection:text-white">
       <div className="fixed top-0 left-0 w-full bg-red-600 py-2 px-4 z-50 text-center shadow-lg">
         <p className="text-xs md:text-sm font-bold tracking-wider text-white flex items-center justify-center gap-2">
           <Clock size={16} /> ATENÇÃO: OFERTA COM 87% DE DESCONTO POR TEMPO LIMITADO
         </p>
       </div>
-
       <main className="pt-8">
         <HeroSection />
         <PainSection />
-        <MechanismSection />
         <TestimonialSlider />
         <OfferSection />
-        <GuaranteeSection />
         <section className="py-24 px-4 bg-zinc-950 text-center border-t border-zinc-900">
           <CTAButton className="w-full max-w-lg mx-auto">
             DESBLOQUEAR ACESSO AGORA
           </CTAButton>
         </section>
       </main>
-
       <Footer />
     </div>
   );
